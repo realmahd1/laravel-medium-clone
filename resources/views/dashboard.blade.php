@@ -22,7 +22,7 @@
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-8">
                 <div class="p-4 text-gray-900">
-                    @foreach ($posts as $post)
+                    @forelse ($posts as $post)
                         <div
                             class="flex bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 mb-8">
                         
@@ -46,8 +46,13 @@
                                 <img class="w-48 h-full object-cover rounded-r-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
                             </a>
                         </div>
-                    @endforeach
+                    @empty
+                        <div>
+                            <p class="text-gray-900 text-center py-16">No posts found.</p>
+                        </div>
+                    @endforelse
                 </div>
+                {{ $posts->onEachSide(1)->links() }}
             </div>
         </div>
     </div>
