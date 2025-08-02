@@ -4,16 +4,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
                 <h1 class="text-4xl mb-4">{{$post->title}}</h1>
                 <div class="flex gap-4">
-                    @if($post->user->image)
-                        <img src="{{ $post->user->imageUrl() }}" class="w-12 h-12 rounded-full"
-                            alt="{{ $post->user->name }}">
-                    @else
-                        <img src="https://avatar.iran.liara.run/public/7" class="w-12 h-12 rounded-full" alt="Avatar">
-                    @endif
+                    <x-user-avatar :user="$post->user" />
                     <!-- User Avatar -->
                     <div>
                         <div class="flex gap-2">
-                            <h3>{{ $post->user->name }}</h3>
+                            <a href="{{ route('profile.show', $post->user) }}"
+                                class="hover:underline">{{ $post->user->name }}</a>
                             &middot;
                             <a href="#" class="text-emerald-600">Follow</a>
                         </div>
