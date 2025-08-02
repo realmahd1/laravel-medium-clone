@@ -1,0 +1,48 @@
+<x-app-layout>
+    <div class="py-4">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
+                <h1 class="text-4xl mb-4">{{$post->title}}</h1>
+                <div class="flex gap-4">
+                    @if($post->user->image)
+                        <img src="{{ $post->user->imageUrl() }}" class="w-12 h-12 rounded-full"
+                            alt="{{ $post->user->name }}">
+                    @else
+                        <img src="https://avatar.iran.liara.run/public/7" class="w-12 h-12 rounded-full" alt="Avatar">
+                    @endif
+                    <!-- User Avatar -->
+                    <div>
+                        <div class="flex gap-2">
+                            <h3>{{ $post->user->name }}</h3>
+                            &middot;
+                            <a href="#" class="text-emerald-600">Follow</a>
+                        </div>
+                        <div class="flex gap-2 text-sm text-gray-500">
+                            <span>{{$post->readTime()}} min read</span>
+                            &middot;
+                            <span>{{$post->created_at->format("M d, Y")}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Clap Section -->
+                <x-clap-button />
+
+                <!-- Content Section -->
+                <div class="mt-4">
+                    <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full">
+
+                    <div class="mt-4">
+                        {{ $post->content }}
+                    </div>
+                </div>
+
+                <div class="mt-8 ">
+                    <span class="px-4 py-2 bg-gray-200 rounded-2xl">{{ $post->category->name }}</span>
+                </div>
+
+                <!-- Clap Section -->
+                <x-clap-button />
+            </div>
+        </div>
+    </div>
+</x-app-layout>

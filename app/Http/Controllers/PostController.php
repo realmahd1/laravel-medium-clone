@@ -37,7 +37,7 @@ class PostController extends Controller
         $data = $request->validated();
 
         $image = $data['image'];
-    
+
         $data['user_id'] = Auth::id();
         $data['slug'] = Str::slug($data["title"]);
 
@@ -52,9 +52,11 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(string $username, Post $post)
     {
-        //
+        return view('post.show', [
+            'post' => $post
+        ]);
     }
 
     /**
