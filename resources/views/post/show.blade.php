@@ -11,7 +11,8 @@
                             <a href="{{ route('profile.show', $post->user) }}"
                                 class="hover:underline">{{ $post->user->name }}</a>
                             &middot;
-                            <button @click="follow()" :class="following ? 'text-red-600':'text-emerald-600'" x-text="following ? 'Unfollow' : 'Follow'"></button>
+                            <button @click="follow()" :class="following ? 'text-red-600':'text-emerald-600'"
+                                x-text="following ? 'Unfollow' : 'Follow'"></button>
                         </x-follow-c-t-r>
                         <div class="flex gap-2 text-sm text-gray-500">
                             <span>{{$post->readTime()}} min read</span>
@@ -21,7 +22,7 @@
                     </div>
                 </div>
                 <!-- Clap Section -->
-                <x-clap-button />
+                <x-clap-button :post="$post" />
 
                 <!-- Content Section -->
                 <div class="mt-4">
@@ -37,7 +38,7 @@
                 </div>
 
                 <!-- Clap Section -->
-                <x-clap-button />
+                <x-clap-button :post="$post" />
             </div>
         </div>
     </div>
