@@ -81,12 +81,29 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ($post->user_id !== Auth::id()) {
+            abort(403);
+        }
+        $post->delete();
+
+        return redirect()->route("myPosts");
     }
 
     public function category(Category $category)
     {
         $posts = $category->posts()
+            ->with(["user", "media"])
+            ->withCount('claps')
+            ->latest()
+            ->simplePaginate(5);
+
+        return view('post.index', compact('posts'));
+    }
+
+    public function myPosts()
+    {
+        $user = auth()->user();
+        $posts = $user->posts()
             ->with(["user", "media"])
             ->withCount('claps')
             ->latest()
