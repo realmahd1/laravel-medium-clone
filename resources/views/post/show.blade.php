@@ -10,9 +10,11 @@
                         <x-follow-c-t-r :user="$post->user" class="flex gap-2">
                             <a href="{{ route('profile.show', $post->user) }}"
                                 class="hover:underline">{{ $post->user->name }}</a>
-                            &middot;
-                            <button @click="follow()" :class="following ? 'text-red-600':'text-emerald-600'"
-                                x-text="following ? 'Unfollow' : 'Follow'"></button>
+                            @auth
+                                &middot;
+                                <button @click="follow()" :class="following ? 'text-red-600':'text-emerald-600'"
+                                    x-text="following ? 'Unfollow' : 'Follow'"></button>
+                            @endauth
                         </x-follow-c-t-r>
                         <div class="flex gap-2 text-sm text-gray-500">
                             <span>{{$post->readTime()}} min read</span>
@@ -26,7 +28,7 @@
 
                 <!-- Content Section -->
                 <div class="mt-4">
-                    <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full">
+                    <img src="{{ $post->imageUrl("large") }}" alt="{{ $post->title }}" class="w-full">
 
                     <div class="mt-4">
                         {{ $post->content }}
