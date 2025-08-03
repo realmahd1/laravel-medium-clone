@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->simplePaginate(5);
+        $posts = Post::with(["user", "media"])->withCount('claps')->latest()->simplePaginate(5);
         return view('post.index', compact('posts'));
     }
 
@@ -46,7 +46,7 @@ class PostController extends Controller
 
         $post = Post::create($data);
 
-        $post -> addMediaFromRequest('image')->toMediaCollection();
+        $post->addMediaFromRequest('image')->toMediaCollection();
         return redirect()->route("dashboard");
     }
 
@@ -86,7 +86,11 @@ class PostController extends Controller
 
     public function category(Category $category)
     {
-        $posts = $category->posts()->latest()->simplePaginate(5);
+        $posts = $category->posts()
+            ->with(["user", "media"])
+            ->withCount('claps')
+            ->latest()
+            ->simplePaginate(5);
 
         return view('post.index', compact('posts'));
     }
