@@ -9,12 +9,14 @@ use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-
+    use HasSlug;
     protected $fillable = [
         // 'image',
         'title',
@@ -26,6 +28,16 @@ class Post extends Model implements HasMedia
         'published_at',
     ];
 
+     /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -46,7 +58,11 @@ class Post extends Model implements HasMedia
             ->addMediaConversion('large')
             ->width(1200);
     }
-
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('default')
+            ->singleFile();
+    }
     public function claps()
     {
         return $this->hasMany(Clap::class);
