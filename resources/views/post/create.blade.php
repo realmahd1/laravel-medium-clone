@@ -30,7 +30,8 @@
                             <option value="">Select a Category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" @selected(old("category_id") == $category->id)>
-                                    {{$category->name}}</option>
+                                    {{$category->name}}
+                                </option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
@@ -46,6 +47,13 @@
                         <x-input-error :messages="$errors->get('content')" class="mt-2" />
                     </div>
 
+                    <!-- Published At -->
+                    <div class="mt-4">
+                        <x-input-label for="published_at" :value="__('Published At')" />
+                        <x-text-input id="published_at" class="block mt-1 w-full" type="datetime-local" name="published_at"
+                            :value="old('published_at')" required autofocus />
+                        <x-input-error :messages="$errors->get('published_at')" class="mt-2" />
+                    </div>
                     <x-primary-button class="mt-4">
                         Submit
                     </x-primary-button>

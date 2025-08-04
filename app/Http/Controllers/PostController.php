@@ -17,7 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(["user", "media"])->withCount('claps')->latest()->simplePaginate(5);
+        $posts = Post::with(["user", "media"])->withCount('claps')
+        ->where("published_at", '<=', now())->latest()->simplePaginate(5);
         return view('post.index', compact('posts'));
     }
 
@@ -114,6 +115,7 @@ class PostController extends Controller
         $posts = $category->posts()
             ->with(["user", "media"])
             ->withCount('claps')
+            ->where("published_at", '<=', now())
             ->latest()
             ->simplePaginate(5);
 
