@@ -11,11 +11,13 @@
         </a>
 
         <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{Str::words($post->content, 20)}}</div>
-        <a href="{{ route('post.show', [
-    "username" => $post->user->username,
-    "post" => $post->slug
-]) }}" class="text-sm text-gray-400 flex gap-4">
-            {{ $post->created_at->format('M d, Y') }}
+        <div class="text-sm text-gray-400 flex gap-4">
+            <div>
+                published by
+                <a class="hover:underline text-gray-600" href="{{ route('profile.show', $post->user->username) }}">{{$post->user->username}}</a>
+                at
+                {{ $post->created_at->format('M d, Y') }}
+            </div>
             <span class="inline-flex gap-1 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-5">
@@ -24,7 +26,7 @@
                 </svg>
                 {{ $post->claps_count }}
             </span>
-        </a>
+        </div>
         {{-- <a href="{{ route('post.show', [
     " username"=> $post->user->username,
             "post" => $post->slug
